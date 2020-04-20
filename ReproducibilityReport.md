@@ -2,7 +2,7 @@
 
 ![alt text](/figs/teaserimage.png "U-net reproduction")
 
-by: 
+by:
 
 * Vera Hoveling, V.T.Hoveling@student.tudelft.nl, 4591941
 
@@ -17,12 +17,12 @@ This document details our reproduction of the now seminal paper "U-net: Convolut
 
 In this report, we briefly explain the U-Net architecture, as well as the steps we took to reproduce the results of the original paper. To do so, we implemented the network both with Pytorch and Keras. The same hyperparameter settings were used for both implementations, showing not only that it is possible to reproduce the work but also inspect differences one might encounter when using another framework. Below we will detail both implementations.
 
-We conclude with a quantitative analysis of our results and concluded that the paper was successfully reproduced. Code and pre-trained models are available for evaluation purposes. 
+We conclude with a quantitative analysis of our results and concluded that the paper was successfully reproduced. Code and pre-trained models are available for evaluation purposes.
 
 
-## U-Net 
+## U-Net
 
-U-Net is a convolutional neural network that was developed specifically for the classification of images in biomedical tasks. Two elements set these tasks apart from “regular” image classification by CNNs: the need for localization (i.e. a label should be assigned to each pixel, not just to the entire image[^2]), and the small number of available training images. 
+U-Net is a convolutional neural network that was developed specifically for the classification of images in biomedical tasks. Two elements set these tasks apart from “regular” image classification by CNNs: the need for localization (i.e. a label should be assigned to each pixel, not just to the entire image[^2]), and the small number of available training images.
 
 The U-Net architecture is an extension of the so-called “fully convolutional network” (FCN)[^3]. In these networks, every layer is a convolutional layer. First, convolutions are applied that decrease the resolution of the image and increase the number of channels (contracting path). Then, transposed convolutions are used to reduce the number of channels and increase the resolution (expanding path). Instead of fully connected layers at the end of the network, the last layer of the FCN maps to an image with the same size as the input image, but with the number of channels equal to the desired number of labels. A softmax function is then used to determine which label is the most likely. To improve accuracy at the last transposed convolution, feature maps resulting from earlier pooling operations are used in later convolutions, retaining more information about the original image. This is what is known as a skip-connection.[^4]
 
@@ -32,7 +32,7 @@ U-Net extends the FCN by using more skip connections as well as using a larger n
 
 ![alt text](/figs/u-net-architecture.png "U-net architecture")*Figure 1: “U-net architecture (example for 32x32 pixels in the lowest resolution). Each blue box corresponds to a multi-channel feature map. The number of channels is denoted on top of the box. The x-y-size is provided at the lower left edge of the box. White boxes represent copied feature maps. The arrows denote the different operations.”[^1]*
 
-			 
+
 
 ## Experiments
 
@@ -40,7 +40,7 @@ The authors of the original paper conduct three experiments on different dataset
 
 For our reproduction we decided to focus on the segmentation challenge because of its simpler data set. The dataset for the segmentation challenge consists of 32 images and corresponding ground-truth labels. The reason we consider this dataset to be easier is because there are only two output channels.
 
- 
+
 
 
 ## Data Augmentation
@@ -49,7 +49,7 @@ As mentioned by Ronneberger et al[^1], a common issue with image segmentation ta
 
 In the paper by Ronneberger et al.[^1], the data augmentation consisted of padding the image by mirroring the borders and performing an elastic deformation on the resulting image. There was also mention of some rotations being performed on the images.
 
-We implemented the data augmentation using the following steps for each image and its label in 
+We implemented the data augmentation using the following steps for each image and its label in
 
 the dataset:
 
@@ -99,38 +99,34 @@ U-Net was originally implemented in the Caffe framework[^1][^14]. However, the f
 
 ### Keras Implementation
 
-The Keras implementation can be found in the [github repository]([https://github.com/asylunatic/unet](https://github.com/asylunatic/unet)) that accompanies this report. We will briefly go over the implementation here for completeness.
+The Keras implementation can be found in the [github repository](https://github.com/asylunatic/unet) that accompanies this report. We will briefly go over the implementation here for completeness.
 
-The implementation loads the augmented dataset from Kaggle (one can choose how large the training set should be). The dataset is then loaded into memory as a training set and a test set. Note that the training set and test set are already separated in the Kaggle repository and that the images in the test set do not contain augmented versions of images used for the training set and vice versa. 
+The implementation loads the augmented dataset from Kaggle (one can choose how large the training set should be). The dataset is then loaded into memory as a training set and a test set. Note that the training set and test set are already separated in the Kaggle repository and that the images in the test set do not contain augmented versions of images used for the training set and vice versa.
 
 Next, we define and compile the network architecture, sticking to the exact dimensions as detailed in the paper. For the architecture we used the Keras Sequential model. The Sequential model is a linear stack of layers, which enabled us to specify each layer of the network sequentially. This made the network rather straightforward to write and to debug. We did not write custom layers for the models but took advantage of Keras’ build in [Conv2D](https://keras.io/layers/convolutional/), [MaxPooling2D](https://keras.io/layers/pooling/), [UpSampling2D](https://keras.io/layers/convolutional/) and [Cropping2D](https://keras.io/layers/convolutional/) layers as well as the [concatenate function](https://keras.io/layers/merge/). We used Keras’ standard weight initialization for all layers, which is Xavier uniform[^18].
 
 
 ### Pytorch Implementation
 
-One of the advantages of PyTorch is that it allows splitting up and combining different layers in modules. As such, we could group together the different kinds of components (e.g. downconvolutions and relus, upsampling/transpose convolutions and relus) and easily change their parameters. 
+One of the advantages of PyTorch is that it allows splitting up and combining different layers in modules. As such, we could group together the different kinds of components (e.g. downconvolutions and relus, upsampling/transpose convolutions and relus) and easily change their parameters.
 
 It was unclear to us whether the authors intended the expanding path to consist of a series of transpose convolutions, or upsamplings followed by normal convolutions. Because of its flexibility, we were able to test both implementations in PyTorch.
 
-In the end, much like with the Keras implementation, we used combinations of PyTorch’s built-in convolutional layers to reconstruct the U-Net architecture. The weights of each convolutional layer were initialized either with Xavier normal or Kaiming normal[^19] distributions. 
+In the end, much like with the Keras implementation, we used combinations of PyTorch’s built-in convolutional layers to reconstruct the U-Net architecture. The weights of each convolutional layer were initialized either with Xavier normal or Kaiming normal[^19] distributions.
 
 
 ## Training
 
-The code can be found on [github]([https://github.com/asylunatic/unet](https://github.com/asylunatic/unet)). To train the models yourself, we highly recommend loading the notebooks into Google Colab, which is what we did as well.
+The code can be found on [github](https://github.com/asylunatic/unet). To train the models yourself, we highly recommend loading the notebooks into Google Colab, which is what we did as well.
 
-To train our models, we used a dataset of 300 images, augmented as described in the section on 
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "Data Augmentation"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[Data Augmentation](#heading=h.13v7j1tl52b7). The dataset was randomly split into a training set with 240 images (80%) and a validation set with 60 images (20%).
+To train our models, we used a dataset of 300 images, augmented as described in the section on [Data Augmentation](#heading=h.13v7j1tl52b7). The dataset was randomly split into a training set with 240 images (80%) and a validation set with 60 images (20%).
 
 
 ### Training with Keras
 
-We partitioned the dataset as described above. The validation set was used to monitor training progress and to schedule the learning rate. For the optimizer we used SGD with a high momentum (0.99 as provided by the paper) and a learning rate of 0.01 (more empirically determined). Furthermore we implemented a learning rate scheduler based on the validation loss, with a factor of 0.1, patience of 10 and a minimum learning rate of 0.00001. 
+We partitioned the dataset as described above. The validation set was used to monitor training progress and to schedule the learning rate. For the optimizer we used SGD with a high momentum (0.99 as provided by the paper) and a learning rate of 0.01 (more empirically determined). Furthermore we implemented a learning rate scheduler based on the validation loss, with a factor of 0.1, patience of 10 and a minimum learning rate of 0.00001.
 
-Training in the Keras implementation seemed rather volatile and we found that there was a tendency to find local minima for completely black images and then to stay stuck there. We tried several remedies such as varying the size of the training set and more modern optimizers like Adadelta, which were not available at the time of the publishing of the paper, but to no avail. However, we were able to do some more stable training after introducing a batch size of larger than one. The batch size of one was specified in the paper, but was mainly determined due to memory constraint at the time. 
+Training in the Keras implementation seemed rather volatile and we found that there was a tendency to find local minima for completely black images and then to stay stuck there. We tried several remedies such as varying the size of the training set and more modern optimizers like Adadelta, which were not available at the time of the publishing of the paper, but to no avail. However, we were able to do some more stable training after introducing a batch size of larger than one. The batch size of one was specified in the paper, but was mainly determined due to memory constraint at the time.
 
 Below we show the training curve of the final model that we obtained, using the learning rate scheduler and a batch size of five for about 100 epochs. Note that the model seems to slightly overfit at the end but as the results on the validation set did not yet worsen, we deemed this an acceptable result.
 
@@ -152,8 +148,8 @@ Below we show the learning curves we obtained, using upsampling and Xavier norma
 
 ## Results
 
-																				
-																															 
+
+
 
 ### Evaluation Methods
 
@@ -244,12 +240,12 @@ The paper very clearly explains how the network is constructed, with clear illus
 
 
 
-															
+
 1. What was the exact procedure that was used for the data augmentation? Did you use other augmentation than the elastic deform? How did you apply them and what were their parameters?
-2. What was the final size of the augmented training set and ratio of each augmentation in the training set? 
-3. What are the network hyper-parameters (optimizer, learning rate etc) that you used in training? 
-																					   
-																												  
+2. What was the final size of the augmented training set and ratio of each augmentation in the training set?
+3. What are the network hyper-parameters (optimizer, learning rate etc) that you used in training?
+
+
 
 Unfortunately, we did not receive an answer to our repeated attempts to contact the authors. The questions remain unanswered.
 
@@ -260,17 +256,17 @@ The paper that U-Net was based on explicitly states the use of transposed convol
 
 The ambiguity surrounding up-convolution is also the reason that the weight initialization is different in the Keras and Pytorch implementations, which are both different from the original paper. The original paper prescribes that the initial weights should be drawn “from a Gaussian distribution with a standard deviation of √2/N, where N denotes the number of incoming nodes of one neuron”[^1]. However, when we implemented this method of initialization, we were still under the impression that the expanding path consisted of upsamplings followed by convolutions instead of transpose convolutions. The author’s method of initialization seemed to cause the same problem as Kaiming initialization, namely weights shooting up to infinity quickly. It was only in the last weeks that we changed the implementation to also allow transpose convolutions, so in the interest of time we decided to stick with a built-in initialization method.
 
-			 
+
 
 ## Future Work
 
-				 
+
 
 ### Other datasets
 
 Our reproduction focused on the ISBI Challenge segmentation dataset. However, the U-net paper targeted not one, but three datasets: it was also trained for the ISBI cell tracking challenge (on the “PhC-U373” and  “DIC-HeLa” datasets). These datasets have different numbers of targeted classes so they require subtle changes to the network. A logical next step to investigate would thus be to adapt the network and train on those datasets.
 
-			 
+
 
 ### Weight map
 

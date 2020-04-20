@@ -97,12 +97,12 @@ The input images of the network should have a size such that all max-pooling ope
 
 ## Network Architecture Implementation
 
-U-Net was originally implemented in the Caffe framework[^1][^14]. However, the framework was last updated 2 years ago[^15]. Since then, new frameworks have been developed. We thought it would be interesting to compare the difference in performance between implementations in two of these frameworks: Keras[^16] and PyTorch[^17]. We will detail both implementations here. Code can be found on [github]([https://github.com/asylunatic/unet](https://github.com/asylunatic/unet)).
+U-Net was originally implemented in the Caffe framework[^1][^14]. However, the framework was last updated 2 years ago[^15]. Since then, new frameworks have been developed. We thought it would be interesting to compare the difference in performance between implementations in two of these frameworks: Keras[^16] and PyTorch[^17]. We will detail both implementations here. Code can be found on [github]([https://github.com/asylunatic/unet](https://github.com/asylunatic/unet).
 
 
 ### Keras Implementation
 
-The Keras implementation can be found in the [github repository]([https://github.com/asylunatic/unet](https://github.com/asylunatic/unet)) that accompanies this report. We will briefly go over the implementation here for completeness.
+The Keras implementation can be found in the [github repository](https://github.com/asylunatic/unet) that accompanies this report. We will briefly go over the implementation here for completeness.
 
 The implementation loads the augmented dataset from Kaggle (one can choose how large the training set should be). The dataset is then loaded into memory as a training set and a test set. Note that the training set and test set are already separated in the Kaggle repository and that the images in the test set do not contain augmented versions of images used for the training set and vice versa.
 
@@ -142,8 +142,13 @@ We partitioned the dataset as described above. Then, we trained with SGD (moment
 
 Training in PyTorch was uneventful and straightforward. The only time we ran into problems was when we tried to use Kaiming initialization in combination with upsampling. Somehow, the interaction between the initialization method and the type of layers caused weights to shoot up to infinity almost instantly.
 
-Below we show one of the learning curves we obtained, using upsampling and Xavier normal initialization.
+Below we show the learning curves we obtained, using upsampling and Xavier normal initialization, transpose convolution and Xavier normal, and transpose convolution and Kaiming normal initialization respectively.
 
+![Training in PyTorch - upsampling and Xavier](figs/modelsupsample_xavier_100_48_216.png)
+
+![Training in PyTorch - transpose convolution and Xavier](figs/modelstranspose_xavier_100_62_108.png)
+
+![Training in PyTorch - transpose convolution and Kaiming](figs/modelstranspose_kaiming_100_23_216.png)
 
 ## Results
 
@@ -182,6 +187,7 @@ We also include a quality measure not present in the original paper for the spec
 | Pytorch - transpose convolution,         | 0.846                      | 0.0836         |
 | kaiming normal initialization            |                            |                |
 +------------------------------------------+----------------------------+----------------+
+
 Table 1: The pixel error and IOU of different models on the augmented segmentation challenge dataset.
 
 For a more qualitative inspection, we also provide a plot with some of the results of the Keras model: \
