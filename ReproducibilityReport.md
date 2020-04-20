@@ -53,21 +53,21 @@ We implemented the data augmentation using the following steps for each image an
 
 the dataset:
 
-<img src="figs/data_augmentation/image.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image.png" width="300" height="300"/><img src="figs/data_augmentation/label.png" width="300" height="300"/>
 
 
 #### Step 1: Padding
 
 The image is padded by mirroring it along its borders. This is to ensure that the pixels in the border region of the image will have enough context during convolution. Mirroring is used in contrast to just performing zero-padding, as zero-padding does not provide any valid and useful information. The padding is larger than is required for the final output size, since the next steps will introduce artifacts at the borders that need to be removed later.
 
-<img src="figs/data_augmentation/image_padded.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_padded.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_padded.png" width="300" height="300"/><img src="figs/data_augmentation/label_padded.png" width="300" height="300"/>
 
 
 #### Step 2: Rotation
 
 The padded image is rotated by a specified angle. This step is not always performed, since we also wanted to produce datasets without rotation.
 
-<img src="figs/data_augmentation/image_rotated.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_rotated.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_rotated.png" width="300" height="300"/><img src="figs/data_augmentation/label_rotated.png" width="300" height="300"/>
 
 
 #### Step 3: Elastic deformation
@@ -80,7 +80,7 @@ The image below by Falk et al.[^12] illustrates how elastic deformation works. A
 
 Ronneberger et al. use a 3x3 grid and sample the displacement vectors from a Gaussian distribution with a standard deviation of 10 pixels. We used the [elasticdeform](https://github.com/gvtulder/elasticdeform) library to perform the elastic deformations using the aforementioned parameters.
 
-<img src="figs/data_augmentation/image_rotated_deformed.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_rotated_deformed.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_rotated_deformed.png" width="300" height="300"/><img src="figs/data_augmentation/label_rotated_deformed.png" width="300" height="300"/>
 
 
 #### Step 4: Cropping
@@ -89,7 +89,7 @@ Finally, the images are cropped to their final size. The cropping removes the bo
 
 The input images of the network should have a size such that all max-pooling operations are performed on layers with even dimensions. We also decided that the network should output a label for the entire original image, to lose no information at the border. This is in contrast to the original paper, where the output is a cropped version of the input image. For the ISBI segmentation challenge dataset, this means that the 512x512 images are padded to have a final size of 700x700, which ensures a valid max-pooling in all layers and a network output of 514x514, which is then further cropped to 512x512.
 
-<img src="figs/data_augmentation/image_rotated_cropped.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_rotated_cropped.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_rotated_cropped.png" width="300" height="300"/><img src="figs/data_augmentation/label_rotated_cropped.png" width="300" height="300"/>
 
 
 ## Network Architecture Implementation
