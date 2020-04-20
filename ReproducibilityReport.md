@@ -3,7 +3,7 @@
 
 by: 
 * Vera Hoveling, V.T.Hoveling@student.tudelft.nl, 4591941
-* Sayra Ranjha S.S.Ranjha@student.tudelft.nl, 4xxxxx
+* Sayra Ranjha S.S.Ranjha@student.tudelft.nl, 4555449
 * Maaike Visser, M.E.B.P.Visser@student.tudelft.nl, 4597265
 
 # Intro
