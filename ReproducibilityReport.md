@@ -14,18 +14,19 @@ In this document we briefly explain the U-Net architecture, as well as the steps
 
 Pre-trained models are also available for evaluation purposes. 
 
-
 ## U-Net 
 [small explanation of U-Net]
-
  
-## Implementation
-We have implemented the network both with Pytorch and Keras. The same hyperparameter settings were used for both implementations, showing not only that it is possible to reproduce the work but also inspect differences one might encounter when using another framework.
-
-## Training
-Training with Keras
-
+# Implementation
+We have implemented the network both with Pytorch and Keras. The same hyperparameter settings were used for both implementations, showing not only that it is possible to reproduce the work but also inspect differences one might encounter when using another framework. In this section we will detail both implementations, as well as the implementation of the data augmentation.
+## Data augmentation
+## Keras Implementation
+The keras implementation kan be found in the Google Colab that accompanies this report, [click here](https://colab.research.google.com/drive/1iR5q2TLUXjYJtPW1v-eShGFQcmKILR7r) The implementation
+# Training
+##Training with Keras
 ![alt text](/figs/learning_curve_opt_SGD__100eps_wvalidation_lrscheduling.png "Training in Keras")
+
+## Training with Pytorch
 
 # Results
 
