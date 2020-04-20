@@ -10,22 +10,15 @@ by:
 This document details our reproduction of the now seminal paper "U-net: Convolutional Networks for Biomedical Image Segmentation", by Ronneberger et al (https://arxiv.org/abs/1505.04597). This project was undertaken as part of the Deep Learning course (CS4240) at the Delft University of Technology. 
 ![alt text](/figs/u-net-architecture.png "U-net architecture")*U-Net architecture*
 
-In this document we briefly explain the U-Net architecture, as well as the steps we took to reproduce the results 
+In this document we briefly explain the U-Net architecture, as well as the steps we took to reproduce the "Pixel Error" the result from Table 1. We also include a quality measure not present in the original paper for the specific data set we used, namely the Intersection over Union. 
+
+Pre-trained models are also available for evaluation purposes. 
 
 
 ## U-Net 
 [small explanation of U-Net]
 
- In this notebook we briefly go over the original ResNet paper https://arxiv.org/abs/1512.03385 and explain the steps to reproduce the Table 6 in the paper.
-
-The Pytorch implementation of the ResNet architecture used in the notebook is based on the publicly available code in
-
-https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py
-https://github.com/akamaster/pytorch_resnet_cifar10.
-We changed the code so that training and testing can be performed in Jupyter notebook via Google Colab.
-
-The results from the original paper have been successfully reproduced with better or comparable results except for the ResNet1202 model since Google Colab does not support enough (16GB) memory usage on GPU for this experiment. We also provided the pretrained models in this repository for evaluation purposes.
-
+ 
 ## Implementation
 We have implemented the network both with Pytorch and Keras. The same hyperparameter settings were used for both implementations, showing not only that it is possible to reproduce the work but also inspect differences one might encounter when using another framework.
 
