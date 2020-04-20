@@ -143,13 +143,39 @@ For quantitative evaluation, we used the "Pixel Error" metric, as one can inspec
 
 ## Results
 
-| framework | intersection over union | pixel error         |   |   |
 
-|-----------|-------------------------|---------------------|---|---|
+<table>
+  <tr>
+   <td>Framework
+   </td>
+   <td>Intersection over union
+   </td>
+   <td>Pixel error
+   </td>
+  </tr>
+  <tr>
+   <td>Keras
+   </td>
+   <td>0.880027184589537
+   </td>
+   <td>0.09784660339355469
+   </td>
+  </tr>
+  <tr>
+   <td>Pytorch
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+  </tr>
+</table>
 
-| keras     | 0.880027184589537       | 0.09784660339355469 |   |   |
 
-| pytorch   |                         |                     |   |   |
+For a more qualitative inspection, we also provide a plot with some of the results of the Keras model: \
+![alt text](/figs/plotresults__SGD__100eps_lrscheduler_winput.png "Results from Keras model")
+
+In this plot one can see the input image, the target labels and the output of the network for a couple of test samples.
 
 
 # Discussion
@@ -159,9 +185,7 @@ For quantitative evaluation, we used the "Pixel Error" metric, as one can inspec
 
 We did not obtain a pixel error as low as reported in the paper, nor an IOU as high as reported in the paper. However, both implementations obtained results that we deem satisfying.
 
-Upon a first glance, the results look very convincing. If anything some are so good that we had to double-check that indeed no test images could have been augmented variations of training data (they were not!). Taking a closer look, one can see that the results indeed are not perfect. For example in figure x, we see that ‘in-cell’-details are often ignored by the network.
-
-%TODO plaatje hier
+Upon a first glance, the results look very convincing. If anything, some are so good that we had to double-check that indeed no test images could have been augmented variations of training data (they were not!). Taking a closer look, one can see that the results indeed are not perfect. For example in the plot above, we see that ‘in-cell’-details are often ignored by the network.
 
 
 ## Unclarities from the paper
