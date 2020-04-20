@@ -143,7 +143,11 @@ We partitioned the dataset as described above. Then, we trained with SGD (moment
 
 Training in PyTorch was uneventful and straightforward. The only time we ran into problems was when we tried to use Kaiming initialization in combination with upsampling. Somehow, the interaction between the initialization method and the type of layers caused weights to shoot up to infinity almost instantly.
 
-Below we show one of the learning curves we obtained, using upsampling and Xavier normal initialization.
+Below we show the learning curves we obtained, using upsampling and Xavier normal initialization, transpose convolution and Xavier normal, and transpose convolution and Kaiming normal initialization respectively.
+
+![alt text](/figs/modelsupsample_xavier_100_48_216.png "Training in PyTorch - upsampling and Xavier")
+![alt text](/figs/modelstranspose_xavier_100_62_108.png "Training in PyTorch - transpose convolution and Xavier")
+![alt text](/figs/modelstranspose_kaiming_100_23_216.png "Training in PyTorch - transpose convolution and Kaiming")
 
 
 ## Results
