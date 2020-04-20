@@ -50,21 +50,21 @@ We implemented the data augmentation using the following steps for each image an
 
 the dataset:
 
-&lt;img src="figs/data_augmentation/image.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label.png" width="300" height="300"/>
 
 
 ### Step 1: Padding
 
 The image is padded by mirroring it along its borders. This is to ensure that the pixels in the border region of the image will have enough context during convolution. Mirroring is used in contrast to just performing zero-padding, as zero-padding does not provide any valid and useful information. The padding is larger than is required for the final output size, since the next steps will introduce artifacts at the borders that need to be removed later.
 
-&lt;img src="figs/data_augmentation/image_padded.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_padded.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_padded.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_padded.png" width="300" height="300"/>
 
 
 ### Step 2: Rotation
 
 The padded image is rotated by a specified angle. This step is not always performed, since we also wanted to produce datasets without rotation.
 
-&lt;img src="figs/data_augmentation/image_rotated.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_rotated.png" width="300" height="300"/>
+<img src="figs/data_augmentation/image_rotated.png" width="300" height="300"/>&lt;img src="figs/data_augmentation/label_rotated.png" width="300" height="300"/>
 
 
 ### Step 3: Elastic deformation
