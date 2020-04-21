@@ -4,11 +4,11 @@
 
 by:
 
-* Vera Hoveling, V.T.Hoveling@student.tudelft.nl, 4591941
+* Vera Hoveling, V.T.Hoveling@student.tudelft.nl
 
-* Sayra Ranjha S.S.Ranjha@student.tudelft.nl, 4555449
+* Sayra Ranjha S.S.Ranjha@student.tudelft.nl
 
-* Maaike Visser, M.E.B.P.Visser@student.tudelft.nl, 4597265
+* Maaike Visser, M.E.B.P.Visser@student.tudelft.nl
 
 
 ## Introduction
